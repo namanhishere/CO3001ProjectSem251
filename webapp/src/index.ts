@@ -17,7 +17,12 @@ app.set("views", path.resolve("views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.resolve("public")));
 
-// // connect DB
+
+// Notification 
+import * as notisys from "./function/Notification.js";
+notisys.NotificationListener.getInstance().registerChannel(new notisys.EmailNotificationChannel());
+notisys.NotificationListener.getInstance().registerChannel(new notisys.FirebaseInappNotificationChannel());
+
 
 // app.get("/", (req, res) );
 app.get("/", authFunc.authMiddlewareWeb, (req, res) => {

@@ -12,6 +12,10 @@ abstract class NotificationChannelAbstract {
 
 
 export class EmailNotificationChannel extends NotificationChannelAbstract {
+    constructor() {
+        super();
+        //logic viết sau
+    }
     async sendNotification(recipient: string, message: string): Promise<void> {
         //logic viết sau
     }
@@ -22,6 +26,10 @@ export class EmailNotificationChannel extends NotificationChannelAbstract {
 
 
 export class FirebaseInappNotificationChannel extends NotificationChannelAbstract {
+    constructor() {
+        super();
+        //logic viết sau
+    }
     async sendNotification(recipient: string, message: string): Promise<void> {
         //logic viết sau
     }
