@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String             @id @default(uuid())
+  hcmutId           String             @unique
+  email             String             @unique
+  fullName          String
+  aboutMe           String             @default("")
+  role              Role               @default(STUDENT)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  feedbacksGiven    Feedback[]
+  receivedMessages  Message[]          @relation("ReceivedMessages")
+  sentMessages      Message[]          @relation("SentMessages")
+  notifications     Notification[]
+  quizAttempts      QuizAttempt[]
+  sessionsAsTutor   Session[]          @relation("TutorSessions")
+  applications      TutorApplication[]
+  tutorProfile      TutorProfile?
+  sessionsAsStudent Session[]          @relation("StudentSessions")
+}
+
+model TutorProfile {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  bio          String?
+  expertise    String[]
+  availability Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Session {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  isOnline    Boolean    @default(false)
+  meetingLink String?
+  location    String?
+  tutorId     String
+  maximumCapacity Int    @default(1)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  feedback    Feedback[]
+  materials   Material[]
+  quizzes     Quiz[]
+  tutor       User       @relation("TutorSessions", fields: [tutorId], references: [id])
+  students    User[]     @relation("StudentSessions")
+
+  tags        SessionTag[]  @relation("SessionTags") 
+}
+
+
+model SessionTag {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  sessions  Session[] @relation("SessionTags")
+  color     String    @default("#a9a9a9")
+
+}
+
+model TutorApplication {
+  id         String            @id @default(uuid())
+  userId     String
+  status     ApplicationStatus @default(PENDING)
+  expertise  String[]
+  experience String?
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  user       User              @relation(fields: [userId], references: [id])
+}
+
+model Material {
+  id        String   @id @default(uuid())
+  sessionId String
+  title     String
+  url       String
+  createdAt DateTime @default(now())
+  session   Session  @relation(fields: [sessionId], references: [id])
+}
+
+model Quiz {
+  id           String        @id @default(uuid())
+  sessionId    String
+  title        String
+  questions    Json
+  createdAt    DateTime      @default(now())
+  session      Session       @relation(fields: [sessionId], references: [id])
+  quizAttempts QuizAttempt[]
+}
+
+model QuizAttempt {
+  id          String   @id @default(uuid())
+  quizId      String
+  studentId   String
+  answers     Json
+  score       Float?
+  submittedAt DateTime @default(now())
+  quiz        Quiz     @relation(fields: [quizId], references: [id])
+  student     User     @relation(fields: [studentId], references: [id])
+}
+
+model Feedback {
+  id          String   @id @default(uuid())
+  sessionId   String
+  studentId   String
+  rating      Int
+  comment     String?
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  session     Session  @relation(fields: [sessionId], references: [id])
+  student     User     @relation(fields: [studentId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  content    String
+  createdAt  DateTime @default(now())
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+}
+
+enum Role {
+  STUDENT
+  TUTOR
+  COORDINATOR
+  DEPARTMENT_CHAIR
+  ADMIN
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

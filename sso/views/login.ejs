@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0109)https://sso.hcmut.edu.vn/cas/login?service=https%3A%2F%2Flms.hcmut.edu.vn%2Flogin%2Findex.php%3FauthCAS%3DCAS -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>[DEMO] – Central Authentication Service</title>
+
+
+    <link type="text/css" rel="stylesheet" href="/static/cas.css">
+
+    <link rel="icon" href="https://sso.hcmut.edu.vn/cas/favicon.ico" type="image/x-icon">
+</head>
+
+<body id="cas" class="fl-theme-iphone">
+    <div class="flc-screenNavigator-view-container">
+        <div class="fl-screenNavigator-view">
+            <div id="header" class="flc-screenNavigator-navbar fl-navbar fl-table">
+                <div id="app-name" class="fl-table-cell">
+                    <img alt="BK" src="/static/bk_logo.png">
+                    <h1>[DEMO]  – Central Authentication Service</h1>
+
+                </div>
+            </div>
+            <div id="content" class="fl-screenNavigator-scroll-container">
+
+
+
+
+                <div class="box fl-panel" id="login">
+                    <form id="fm1" class="fm-v clearfix"
+                        action="/login"
+                        method="post">
+                        <% if (error) { %>
+                            <div id="msg" class="errors" style="background-color: rgb(255, 238, 221);">The credentials you provided cannot be determined to be authentic.</div>
+                        <% } %>
+                        <!-- Congratulations on bringing CAS online!  The default authentication handler authenticates where usernames equal passwords: go ahead, try it out. -->
+                        <h2>Enter your Username and Password</h2>
+                        <div class="row fl-controls-left">
+                            <label for="username" class="fl-label"><span class="accesskey">U</span>sername</label>
+
+
+
+
+                            <input id="username" name="username" class="required" tabindex="1" accesskey="u" type="text"
+                                value="" autocomplete="false">
+
+                        </div>
+                        <div class="row fl-controls-left">
+                            <label for="password" class="fl-label"><span class="accesskey">P</span>assword</label>
+
+
+                            <input id="password" name="password" class="required" tabindex="2" accesskey="p"
+                                type="password" value="" autocomplete="off">
+                        </div>
+                        <div class="row btn-row">
+                            <input type="hidden" name="client_id" value="<%= client_id %>">
+                            <input type="hidden" name="redirect_uri" value="<%= redirect_uri %>">
+                            <input type="hidden" name="response_type" value="<%= response_type %>">
+                            <input type="hidden" name="scope" value="<%= scope %>">
+                            <input class="btn-submit" name="submit" accesskey="l" value="Login" tabindex="4"
+                                type="submit">
+                            <input class="btn-reset" name="reset" accesskey="c" value="Clear" tabindex="5" type="reset">
+                        </div>
+                        <div class="row support">
+                        </div>
+                    </form>
+                </div>
+                <div id="sidebar">
+                    <div class="sidebar-content">
+                        <div id="list-notes" class="fl-panel">
+                            <h3>Please note</h3>
+                            <p class="fl-panel fl-note fl-bevel-white fl-font-size-80">This is a demo CAS server for course of CO3001</p>
+                            <p class="fl-panel fl-note fl-bevel-white fl-font-size-80">Do not use your real HCMUT account and password to login! </p>
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div id="footer" class="fl-panel fl-note fl-bevel-white fl-font-size-80">
+                <a id="hcmut" href="http://www.hcmut.edu.vn/" title="go to HCMUT home page"></a>
+                <div id="copyright">
+                    <p>Copyright © 2011 - 2012 Ho Chi Minh University of Technology. All rights reserved.</p>
+                    <p>Powered by <a href="http://www.jasig.org/cas">Jasig CAS 3.5.1</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/jquery.min.js.download"></script>
+    <script type="text/javascript"
+        src="/static/jquery-ui.min.js.download"></script>
+    <script type="text/javascript" src="/static/cas.js.download"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+/db
+*/node_modules
+*/temp
+/datacore/HK232.json
+database*.sql
+config
+*.txt
+docker/
+
+#use for internal dev and  testing files
+helper.py
