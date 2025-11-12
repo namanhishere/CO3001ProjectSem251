@@ -12,4 +12,4 @@ docker/
 helper.py
 
 #this use for CI/CD testing
-./act.exe
+act.exe
