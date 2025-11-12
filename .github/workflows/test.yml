@@ -1,0 +1,49 @@
+name: Tét cây
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  buildTesting:
+    runs-on: ubuntu-latest # who the hell uses windows for webapp testing?
+
+    defaults:
+      run:
+        working-directory: webapp
+
+    env:
+      DATABASE_URL: "postgresql://user:password@localhost:5432/my_db"
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Install dependencies
+      - name: Install package
+        run: npm ci
+      
+      # Build TypeScript
+      - name: Build the Typescript code
+        run: npx tsc
+
+      # Generate Prisma client
+      - name: Generate Prisma client
+        run: npx prisma generate
+      
+      # Start the server in background
+      - name: Start server
+        run: |
+          nohup node dist/index.js & 
+          sleep 3
+
+      # Test root route
+      # - name: Test root route
+      #   run: curl -f http://localhost:3000/ || exit 1

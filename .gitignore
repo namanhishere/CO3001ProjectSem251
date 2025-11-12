@@ -6,6 +6,10 @@ database*.sql
 config
 *.txt
 docker/
+**/dist/
 
 #use for internal dev and  testing files
 helper.py
+
+#this use for CI/CD testing
+./act.exe
