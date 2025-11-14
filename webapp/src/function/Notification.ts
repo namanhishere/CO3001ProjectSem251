@@ -1,5 +1,5 @@
 enum ChannelType {
-    INAPP,
+    IN_APP,
     FIREBASE,
     EMAIL,
 }
