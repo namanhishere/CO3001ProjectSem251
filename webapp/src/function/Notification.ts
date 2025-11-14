@@ -1,5 +1,6 @@
 enum ChannelType {
-    IN_APP,
+    INAPP,
+    FIREBASE,
     EMAIL,
 }
 
@@ -26,6 +27,19 @@ export class EmailNotificationChannel extends NotificationChannelAbstract {
 
 
 export class FirebaseInappNotificationChannel extends NotificationChannelAbstract {
+    constructor() {
+        super();
+        //logic viết sau
+    }
+    async sendNotification(recipient: string, message: string): Promise<void> {
+        //logic viết sau
+    }
+    getChannelType(): ChannelType {
+        return ChannelType.FIREBASE;
+    }
+}
+
+export class InappNotificationChannel extends NotificationChannelAbstract {
     constructor() {
         super();
         //logic viết sau
